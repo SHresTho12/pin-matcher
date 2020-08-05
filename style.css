@@ -104,3 +104,20 @@ color: #E0B612;
     color: #FF3C5F;
     margin-top: 10px;
 }
+#eror{
+    display: none;
+
+}
+#verified{
+    display: none;
+}
+#pin-number{
+    text-align: center;
+    background-color: #495BC3;
+    color: #fff;
+}
+#input-number{
+    text-align: center;
+    background-color: #495BC3;
+    color: #fff;
+}

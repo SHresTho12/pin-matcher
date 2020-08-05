@@ -12,47 +12,114 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="pin-generator half-width">
-                    <input class="form-control" type="text">
-                    <button class="generate-btn">Generate Pin</button>
+                    <input id="pin-number" class="form-control" type="number">
+                    <button id="pin-button" class="generate-btn">Generate Pin</button>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="input-section half-width">
-                    <input class="form-control" type="text">
+                    <input id="input-number" class="form-control" type="number">
                     <div class="numbers">
                         <div class="calc-body">
                             <div class="calc-button-row">
-                              <div class="button">7</div>
-                              <div class="button">8</div>
-                              <div class="button">9</div>
+                              <div onclick="number(7)" class="button num">7</div>
+                              <div  onclick="number(8)" class="button num">8</div>
+                              <div  onclick="number(9)" class="button num">9</div>
                             </div>
                             <div class="calc-button-row">
-                              <div class="button">4</div>
-                              <div class="button">5</div>
-                              <div class="button">6</div>
+                              <div onclick="number(4)" class="button num">4</div>
+                              <div  onclick="number(5)" class="button num">5</div>
+                              <div  onclick="number(6)" class="button num">6</div>
                             </div>
                             <div class="calc-button-row">
-                              <div class="button">1</div>
-                              <div class="button">2</div>
-                              <div class="button">3</div>
+                              <div onclick="number(1)" class="button num">1</div>
+                              <div onclick="number(2)" class="button num">2</div>
+                              <div onclick="number(3)" class="button num">3</div>
                             </div>
                             <div class="calc-button-row">
                                 <div class="button"><</div>
-                                <div class="button">0</div>
-                                <div class="button">C</div>
+                                <div onclick="number(0)" class="button num">0</div>
+                                <div id="clear" class="button">C</div>
                             </div>
                             <div>
-                                <button type="submit" class="submit-btn">Submit</button>
-                                <p class="action-left">3 try left</p>
+                                <button id="submit" type="submit" class="submit-btn">Submit</button>
+                                <p id="tryLeft" class="action-left"><span id="trycount">3</span> try left</p>
+                                
                             </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="notify-section">
-            <p class="notify">❌ Pin Didn't Match, Please try again</p>
-            <p class="notify">✅ Pin Matched... Secret door is opening for you</p>
+            <p id = "eror" class="notify">❌ Pin Didn't Match, Please try again</p>
+            <p id ="verified" class="notify">✅ Pin Matched... Secret door is opening for you</p>
+            <h6 class="text-center text-danger" id="notify">You're trying three times, <br>Please agin click Generate pin</h6>
         </div>
     </div>
+    <script>
+const pinButton=document.getElementById("pin-button");
+pinButton.addEventListener("click",function(){
+const pinNumber= document.getElementById("pin-number").value;
+var val = Math.floor(1000 + Math.random() * 9000);
+document.getElementById("pin-number").value = val;
+document.getElementById("submit").style.display = "block";
+document.getElementById("notify").style.display = "none";
+document.getElementById("verified").style.display="none";
+        document.getElementById("eror").style.display="none";
+})
+
+
+var typed = 0;
+
+ var pintyped= 0;
+
+function number(num){
+   
+    pintyped = pintyped*10+num;
+    typed++;
+ 
+   document.getElementById("input-number").value = pintyped;
+}
+
+document.getElementById("submit").addEventListener("click", function(){
+    var input = document.getElementById("input-number").value;
+    var pin = document.getElementById("pin-number").value;
+    if(input == '' || pin == ''){
+        alert("please enter 4 digit pin or click generate pin");
+    }
+    else if(input == pin){
+        document.getElementById("verified").style.display="block";
+        document.getElementById("eror").style.display="none";
+        document.getElementById("input-number").value = "";
+        document.getElementById("pin-number").value = "";
+    }
+    else if(input != pin){   
+        document.getElementById("verified").style.display="none";
+        document.getElementById("eror").style.display="block";
+        document.getElementById("input-number").value = "";
+        var trycount = document.getElementById("trycount").innerText;
+        var num = parseInt(trycount);
+        var tryCount = num - 1;
+        document.getElementById("trycount").innerText = tryCount;
+        if(tryCount <= -1){
+            document.getElementById("trycount").innerText = 0;
+        }
+        else if(tryCount == 0){
+            document.getElementById("submit").style.display = "none";
+            var notify = document.getElementById("notify");
+            notify.style.display = "block";
+        }
+        
+    }pintyped =0;
+})
+
+
+
+
+document.getElementById("clear").addEventListener("click", function(){
+    pintyped= 0;
+    document.getElementById("input-number").value = "";
+})
+    </script>
 </body>
 </html>
